@@ -1,0 +1,4 @@
+github.com/cuberat/go-log v1.0.0 h1:1k/X67kchqnDcOhScAwiNeHM8/fxkNbVV7pn36RU9BQ=
+github.com/cuberat/go-log v1.0.0/go.mod h1:R4S0DHLsMwXI8Kj0T3Tks3+bzGiveOL3HnK+Az+mRl4=
+github.com/cuberat/go-textparser v1.0.0 h1:vQUkPJPx2x5VSFnSRaezAEKmPobrXQUetuG5kOUEZlk=
+github.com/cuberat/go-textparser v1.0.0/go.mod h1:8juDAO1YZr7ZqWfCSUlRBGmnCXVlwhZQhCOKrv3MA6c=
