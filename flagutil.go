@@ -25,26 +25,32 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 // flagutil is a wrapper around the flag module to implement command-line flag
-// parsing. // Define flags using `Flag()` or `FlagFromStruct()`. Instead of
+// parsing. Define flags using `Flag()` or `FlagFromStruct()`. Instead of
 // providing a different `*Var`, method for each flag type, flagutil provides
 // just one simlar method (`Flag()`) that determines the type based on the
 // type of variable used to bind the flag, in addition to supporting the use
 // of a struct to declare flags. In addition, slices are supported for options
 // that should have multiple values. Just pass a reference to a slice to
 // `Flag()`, or make the appropriate field a slice in a struct passed to
-// `FlagFromStruct`. // This declares an integer flag, `-flagname`, bound to
-// the variable `flagvar`. // var flagvar int flagutil.Flag(&flagvar,
-// "flagname", "The flag number.") // The default value for a flag is
-// specified by assigning a value to the variable before calling
-// `flagutil.Parse()`. // `flagutil` allows the use of a struct to specify
-// flags. The flags parameters are specified using struct tags strings, using
-// the tag name `flagutil`. Elements in the tag should be comma-delimited. The
-// first value is the flag name. Remaining parameters must be of the form
-// name='value', where supported names are "del" (optional delimiter for
-// multi-valued flags), and "usage" (the usage string for the flag). In order
-// for a struct field to be used as a flag, the field name must start with an
-// uppercase letter (so that the field is exported), and the name parameter
-// must be specified. The delimiter and parameters are optional.
+// `FlagFromStruct`.
+//
+// This declares an integer flag, `-flagname`, bound to the variable
+// `flagvar`.
+//
+//     var flagvar int flagutil.Flag(&flagvar, "flagname", "The flag number.")
+//
+// The default value for a flag is specified by assigning a value to the
+// variable before calling `flagutil.Parse()`.
+//
+// `flagutil` allows the use of a struct to specify flags. The flags
+// parameters are specified using struct tags strings, using the tag name
+// `flagutil`. Elements in the tag should be comma-delimited. The first value
+// is the flag name. Remaining parameters must be of the form name='value',
+// where supported names are "del" (optional delimiter for multi-valued
+// flags), and "usage" (the usage string for the flag). In order for a struct
+// field to be used as a flag, the field name must start with an uppercase
+// letter (so that the field is exported), and the name parameter must be
+// specified. The delimiter and parameters are optional.
 //
 // The following specifies a slice of IP addresses as strings. IP addresses
 // can be repeated as separate command-line arguments, each preceded by the
@@ -54,14 +60,14 @@
 // `cnt`), since there is no delimiter specified. The `Quote` field
 // demonstrates how to put a single quote in the usage string.
 //
-// type MyFlags struct {
-//     IPs []string `flagutil:"ip,del=',', usage='The IP address'"`
-//     Counts []int `flagutil:"cnt,usage='The count'"`
-//     Quote string `flagutil:"quote,usage='Field to show embedded (\\') chars'"`
-// }
+//   type MyFlags struct {
+//       IPs []string `flagutil:"ip,del=',', usage='The IP address'"`
+//       Counts []int `flagutil:"cnt,usage='The count'"`
+//       Quote string `flagutil:"quote,usage='Field to show embedded (\\') chars'"`
+//   }
 //
-// data := new(MyFlags)
-// flagutil.FlagFromStruct(data)
+//   data := new(MyFlags)
+//   flagutil.FlagFromStruct(data)
 //
 // The default set of command-line flags is controlled by top-level functions.
 // The FlagSet type allows one to define independent sets of flags, such as to

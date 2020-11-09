@@ -9,26 +9,33 @@
 
 ## <a name="pkg-overview">Overview</a>
 flagutil is a wrapper around the flag module to implement command-line flag
-parsing. // Define flags using `Flag()` or `FlagFromStruct()`. Instead of
+parsing. Define flags using `Flag()` or `FlagFromStruct()`. Instead of
 providing a different `*Var`, method for each flag type, flagutil provides
 just one simlar method (`Flag()`) that determines the type based on the
 type of variable used to bind the flag, in addition to supporting the use
 of a struct to declare flags. In addition, slices are supported for options
 that should have multiple values. Just pass a reference to a slice to
 `Flag()`, or make the appropriate field a slice in a struct passed to
-`FlagFromStruct`. // This declares an integer flag, `-flagname`, bound to
-the variable `flagvar`. // var flagvar int flagutil.Flag(&flagvar,
-"flagname", "The flag number.") // The default value for a flag is
-specified by assigning a value to the variable before calling
-`flagutil.Parse()`. // `flagutil` allows the use of a struct to specify
-flags. The flags parameters are specified using struct tags strings, using
-the tag name `flagutil`. Elements in the tag should be comma-delimited. The
-first value is the flag name. Remaining parameters must be of the form
-name='value', where supported names are "del" (optional delimiter for
-multi-valued flags), and "usage" (the usage string for the flag). In order
-for a struct field to be used as a flag, the field name must start with an
-uppercase letter (so that the field is exported), and the name parameter
-must be specified. The delimiter and parameters are optional.
+`FlagFromStruct`.
+
+This declares an integer flag, `-flagname`, bound to the variable
+`flagvar`.
+
+
+	var flagvar int flagutil.Flag(&flagvar, "flagname", "The flag number.")
+
+The default value for a flag is specified by assigning a value to the
+variable before calling `flagutil.Parse()`.
+
+`flagutil` allows the use of a struct to specify flags. The flags
+parameters are specified using struct tags strings, using the tag name
+`flagutil`. Elements in the tag should be comma-delimited. The first value
+is the flag name. Remaining parameters must be of the form name='value',
+where supported names are "del" (optional delimiter for multi-valued
+flags), and "usage" (the usage string for the flag). In order for a struct
+field to be used as a flag, the field name must start with an uppercase
+letter (so that the field is exported), and the name parameter must be
+specified. The delimiter and parameters are optional.
 
 The following specifies a slice of IP addresses as strings. IP addresses
 can be repeated as separate command-line arguments, each preceded by the
@@ -38,17 +45,15 @@ that must be repeated as separate arguments (each preceded with the flag
 `cnt`), since there is no delimiter specified. The `Quote` field
 demonstrates how to put a single quote in the usage string.
 
-type MyFlags struct {
 
-
-	IPs []string `flagutil:"ip,del=',', usage='The IP address'"`
-	Counts []int `flagutil:"cnt,usage='The count'"`
-	Quote string `flagutil:"quote,usage='Field to show embedded (\\') chars'"`
-
-}
-
-data := new(MyFlags)
-flagutil.FlagFromStruct(data)
+	type MyFlags struct {
+	    IPs []string `flagutil:"ip,del=',', usage='The IP address'"`
+	    Counts []int `flagutil:"cnt,usage='The count'"`
+	    Quote string `flagutil:"quote,usage='Field to show embedded (\\') chars'"`
+	}
+	
+	data := new(MyFlags)
+	flagutil.FlagFromStruct(data)
 
 The default set of command-line flags is controlled by top-level functions.
 The FlagSet type allows one to define independent sets of flags, such as to
@@ -214,7 +219,7 @@ Parsed reports whether the command-line flags have been parsed.
 
 
 
-## <a name="ErrorHandling">type</a> [ErrorHandling](/src/target/flagutil.go?s=4318:4340#L75)
+## <a name="ErrorHandling">type</a> [ErrorHandling](/src/target/flagutil.go?s=4339:4361#L81)
 ``` go
 type ErrorHandling int
 ```
@@ -235,7 +240,7 @@ const (
 
 
 
-## <a name="FlagSet">type</a> [FlagSet](/src/target/flagutil.go?s=4968:5141#L97)
+## <a name="FlagSet">type</a> [FlagSet](/src/target/flagutil.go?s=4989:5162#L103)
 ``` go
 type FlagSet struct {
     Usage func()
@@ -263,7 +268,7 @@ var (
 
 
 
-### <a name="NewFlagSet">func</a> [NewFlagSet](/src/target/flagutil.go?s=5332:5399#L110)
+### <a name="NewFlagSet">func</a> [NewFlagSet](/src/target/flagutil.go?s=5353:5420#L116)
 ``` go
 func NewFlagSet(name string, error_handling ErrorHandling) *FlagSet
 ```
@@ -275,7 +280,7 @@ message and in error messages.
 
 
 
-### <a name="FlagSet.Arg">func</a> (\*FlagSet) [Arg](/src/target/flagutil.go?s=6409:6445#L142)
+### <a name="FlagSet.Arg">func</a> (\*FlagSet) [Arg](/src/target/flagutil.go?s=6430:6466#L148)
 ``` go
 func (fs *FlagSet) Arg(i int) string
 ```
@@ -286,7 +291,7 @@ element does not exist.
 
 
 
-### <a name="FlagSet.Args">func</a> (\*FlagSet) [Args](/src/target/flagutil.go?s=6158:6192#L135)
+### <a name="FlagSet.Args">func</a> (\*FlagSet) [Args](/src/target/flagutil.go?s=6179:6213#L141)
 ``` go
 func (fs *FlagSet) Args() []string
 ```
@@ -296,7 +301,7 @@ parsing the flags).
 
 
 
-### <a name="FlagSet.Flag">func</a> (\*FlagSet) [Flag](/src/target/flagutil.go?s=12787:12855#L360)
+### <a name="FlagSet.Flag">func</a> (\*FlagSet) [Flag](/src/target/flagutil.go?s=12808:12876#L366)
 ``` go
 func (fs *FlagSet) Flag(store interface{}, name, usage string) error
 ```
@@ -321,7 +326,7 @@ command line argument.
 
 
 
-### <a name="FlagSet.FlagFromStruct">func</a> (\*FlagSet) [FlagFromStruct](/src/target/flagutil.go?s=10616:10674#L285)
+### <a name="FlagSet.FlagFromStruct">func</a> (\*FlagSet) [FlagFromStruct](/src/target/flagutil.go?s=10637:10695#L291)
 ``` go
 func (fs *FlagSet) FlagFromStruct(store interface{}) error
 ```
@@ -348,7 +353,7 @@ message.
 
 
 
-### <a name="FlagSet.FlagSep">func</a> (\*FlagSet) [FlagSep](/src/target/flagutil.go?s=13227:13303#L369)
+### <a name="FlagSet.FlagSep">func</a> (\*FlagSet) [FlagSep](/src/target/flagutil.go?s=13248:13324#L375)
 ``` go
 func (fs *FlagSet) FlagSep(store interface{}, name, usage, del string) error
 ```
@@ -361,7 +366,7 @@ specified delimiter.
 
 
 
-### <a name="FlagSet.GetFlagSet">func</a> (\*FlagSet) [GetFlagSet](/src/target/flagutil.go?s=15866:15912#L448)
+### <a name="FlagSet.GetFlagSet">func</a> (\*FlagSet) [GetFlagSet](/src/target/flagutil.go?s=15887:15933#L454)
 ``` go
 func (f *FlagSet) GetFlagSet() *flag.FlagSet
 ```
@@ -370,7 +375,7 @@ Returns the underlying `*flag.FlagSet`.
 
 
 
-### <a name="FlagSet.Output">func</a> (\*FlagSet) [Output](/src/target/flagutil.go?s=6608:6645#L148)
+### <a name="FlagSet.Output">func</a> (\*FlagSet) [Output](/src/target/flagutil.go?s=6629:6666#L154)
 ``` go
 func (fs *FlagSet) Output() io.Writer
 ```
@@ -380,7 +385,7 @@ if output was not set or was set to nil.
 
 
 
-### <a name="FlagSet.Parse">func</a> (\*FlagSet) [Parse](/src/target/flagutil.go?s=7145:7190#L163)
+### <a name="FlagSet.Parse">func</a> (\*FlagSet) [Parse](/src/target/flagutil.go?s=7166:7211#L169)
 ``` go
 func (fs *FlagSet) Parse(args []string) error
 ```
@@ -392,7 +397,7 @@ ErrHelp if -help or -h were set but not defined.
 
 
 
-### <a name="FlagSet.Parsed">func</a> (\*FlagSet) [Parsed](/src/target/flagutil.go?s=15130:15161#L425)
+### <a name="FlagSet.Parsed">func</a> (\*FlagSet) [Parsed](/src/target/flagutil.go?s=15151:15182#L431)
 ``` go
 func (f *FlagSet) Parsed() bool
 ```
@@ -403,7 +408,7 @@ Parsed reports whether `f.Parse` has been called.
 
 
 
-### <a name="FlagSet.PrintDefaults">func</a> (\*FlagSet) [PrintDefaults](/src/target/flagutil.go?s=5985:6019#L129)
+### <a name="FlagSet.PrintDefaults">func</a> (\*FlagSet) [PrintDefaults](/src/target/flagutil.go?s=6006:6040#L135)
 ``` go
 func (fs *FlagSet) PrintDefaults()
 ```
@@ -414,7 +419,7 @@ documentation for the global function PrintDefaults for more information.
 
 
 
-### <a name="FlagSet.SetOutput">func</a> (\*FlagSet) [SetOutput](/src/target/flagutil.go?s=6766:6807#L154)
+### <a name="FlagSet.SetOutput">func</a> (\*FlagSet) [SetOutput](/src/target/flagutil.go?s=6787:6828#L160)
 ``` go
 func (fs *FlagSet) SetOutput(w io.Writer)
 ```
@@ -424,7 +429,7 @@ os.Stderr is used.
 
 
 
-### <a name="FlagSet.Var">func</a> (\*FlagSet) [Var](/src/target/flagutil.go?s=14910:14976#L418)
+### <a name="FlagSet.Var">func</a> (\*FlagSet) [Var](/src/target/flagutil.go?s=14931:14997#L424)
 ``` go
 func (f *FlagSet) Var(value flag.Value, name string, usage string)
 ```
@@ -440,7 +445,7 @@ Set would decompose the comma-separated string into the slice.
 
 
 
-### <a name="FlagSet.Visit">func</a> (\*FlagSet) [Visit](/src/target/flagutil.go?s=15432:15476#L434)
+### <a name="FlagSet.Visit">func</a> (\*FlagSet) [Visit](/src/target/flagutil.go?s=15453:15497#L440)
 ``` go
 func (f *FlagSet) Visit(fn func(*flag.Flag))
 ```
@@ -453,7 +458,7 @@ visits only those flags that have been set.
 
 
 
-### <a name="FlagSet.VisitAll">func</a> (\*FlagSet) [VisitAll](/src/target/flagutil.go?s=15738:15785#L443)
+### <a name="FlagSet.VisitAll">func</a> (\*FlagSet) [VisitAll](/src/target/flagutil.go?s=15759:15806#L449)
 ``` go
 func (f *FlagSet) VisitAll(fn func(*flag.Flag))
 ```
